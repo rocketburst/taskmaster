@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import NextAuthProvider from "@/providers/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(inter.className, "bg-gray-100")}>{children}</body>
+      <body className={clsx(inter.className, "bg-gray-100")}>
+        <NextAuthProvider>{children}</NextAuthProvider>
+      </body>
     </html>
   );
 }

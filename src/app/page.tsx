@@ -1,7 +1,15 @@
-export default function Home() {
+import { getServerSession } from "next-auth";
+import Something from "@/components/Something";
+
+export default async function Home() {
+  // const { data: session } = useSession();
+  const session = await getServerSession();
+  console.log(session);
+
   return (
     <main>
-      <h1 className="text-red-500">h1</h1>
+      <Something />
+      <p>{session && <span>{session.user.email}</span>}</p>
     </main>
   );
 }
