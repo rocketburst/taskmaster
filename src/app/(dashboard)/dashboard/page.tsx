@@ -1,15 +1,7 @@
-import Something from "@/components/Something";
-import { getCurrentUser } from "@/lib/session";
-
 export default async function DashboardPage() {
-  // const { data: session } = useSession();
-  const user = await getCurrentUser();
-  // console.log(user);
-
   return (
-    <main>
-      <Something />
-      <p>{user && <span>{user.email}</span>}</p>
+    <main className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
+      Hi
     </main>
   );
 }

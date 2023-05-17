@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(inter.className, "bg-gray-100")}>
+      <body className={clsx(inter.className, "bg-gray-50")}>
         <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
