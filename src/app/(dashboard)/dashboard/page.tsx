@@ -1,7 +1,17 @@
+import { getUserTasks } from "@/lib/services";
+import { getCurrentUser } from "@/lib/session";
+
 export default async function DashboardPage() {
+  const user = await getCurrentUser();
+  const tasks = await getUserTasks(user?.email as string);
+
   return (
-    <main className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
-      Hi
+    <main className="mx-auto max-w-screen-xl px-4 pt-6 sm:px-6 sm:pt-8 lg:px-8">
+      <h2 className="text-2xl font-bold text-gray-900">All Tasks</h2>
+
+      {tasks.map(task => (
+        <p key={task.$id}>{task.content}</p>
+      ))}
     </main>
   );
 }

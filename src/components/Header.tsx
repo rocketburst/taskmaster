@@ -68,7 +68,7 @@ export default function Header({ name, image }: HeaderProps) {
         </div>
 
         <div className="mt-8">
-          <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
             Welcome Back, <span className="text-red-500">{name}!</span>
           </h1>
 
