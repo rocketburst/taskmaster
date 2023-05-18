@@ -5,4 +5,5 @@ export interface Task extends Models.Document {
   priority: "low" | "medium" | "high";
   userEmail: string;
   reminders?: Date[];
+  isCompleted: boolean;
 }
