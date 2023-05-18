@@ -7,6 +7,9 @@ export default withAuth(
     const isAuth = !!token;
     const isAuthPage = req.nextUrl.pathname.startsWith("/auth");
 
+    if (req.nextUrl.pathname === "/")
+      return NextResponse.redirect(new URL("/dashboard", req.url));
+
     if (isAuthPage) {
       if (isAuth) return NextResponse.redirect(new URL("/dashboard", req.url));
       return null;
@@ -30,5 +33,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/auth"],
+  matcher: ["/dashboard/:path*", "/auth", "/"],
 };

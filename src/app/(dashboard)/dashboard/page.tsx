@@ -21,7 +21,7 @@ const obj = {
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   const tasks = await getUserTasks(user?.email as string);
-  console.log(tasks);
+
   return (
     <main className="mx-auto max-w-screen-xl px-4 pt-6 sm:px-6 sm:pt-8 lg:px-8">
       <div className="flex items-center justify-between">
