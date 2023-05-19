@@ -11,7 +11,7 @@ import {
 
 export default function MobileMenu() {
   return (
-    <div className="">
+    <div className="z-10 sm:hidden">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button>
