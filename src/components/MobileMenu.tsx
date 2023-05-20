@@ -5,8 +5,6 @@ import { Fragment, useContext } from "react";
 import {
   ChevronDownIcon,
   PlusCircleIcon,
-  PencilSquareIcon,
-  TrashIcon,
   ArrowsUpDownIcon,
 } from "@heroicons/react/20/solid";
 import { ModalContext } from "@/contexts/ModalContext";
@@ -86,53 +84,6 @@ export default function MobileMenu() {
                       />
                     )}
                     Create Task
-                  </button>
-                )}
-              </Menu.Item>
-
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-red-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                    onClick={() => changeModalVisibility("edit")}
-                  >
-                    {active ? (
-                      <PencilSquareIcon
-                        className="mr-2 h-5 w-5 text-white"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <PencilSquareIcon
-                        className="mr-2 h-5 w-5 text-red-500"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Edit Task
-                  </button>
-                )}
-              </Menu.Item>
-
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-red-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <TrashIcon
-                        className="mr-2 h-5 w-5 text-white"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <TrashIcon
-                        className="mr-2 h-5 w-5 text-red-500"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Delete Task
                   </button>
                 )}
               </Menu.Item>

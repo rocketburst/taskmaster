@@ -40,7 +40,12 @@ export default function ModalProvider({
   };
 
   return (
-    <ModalContext.Provider value={{ changeModalVisibility, getModalState }}>
+    <ModalContext.Provider
+      value={{
+        changeModalVisibility,
+        getModalState,
+      }}
+    >
       {children}
     </ModalContext.Provider>
   );
