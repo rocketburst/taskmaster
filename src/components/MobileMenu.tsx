@@ -1,15 +1,22 @@
 "use client";
 
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import {
   ChevronDownIcon,
   PlusCircleIcon,
   PencilSquareIcon,
   TrashIcon,
+  ArrowsUpDownIcon,
 } from "@heroicons/react/20/solid";
+import { ModalContext } from "@/contexts/ModalContext";
+import { ModalContextType } from "@/types";
 
 export default function MobileMenu() {
+  const { changeModalVisibility } = useContext(
+    ModalContext
+  ) as ModalContextType;
+
   return (
     <div className="z-10 sm:hidden">
       <Menu as="div" className="relative inline-block text-left">
@@ -39,6 +46,33 @@ export default function MobileMenu() {
                     className={`${
                       active ? "bg-red-500 text-white" : "text-gray-900"
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    onClick={() => changeModalVisibility("sort")}
+                  >
+                    {active ? (
+                      <ArrowsUpDownIcon
+                        className="mr-2 h-5 w-5 text-white"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <ArrowsUpDownIcon
+                        className="mr-2 h-5 w-5 text-red-500"
+                        aria-hidden="true"
+                      />
+                    )}
+                    Sort Tasks
+                  </button>
+                )}
+              </Menu.Item>
+            </div>
+
+            <div className="px-1 py-1">
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={`${
+                      active ? "bg-red-500 text-white" : "text-gray-900"
+                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    onClick={() => changeModalVisibility("create")}
                   >
                     {active ? (
                       <PlusCircleIcon
@@ -62,6 +96,7 @@ export default function MobileMenu() {
                     className={`${
                       active ? "bg-red-500 text-white" : "text-gray-900"
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    onClick={() => changeModalVisibility("edit")}
                   >
                     {active ? (
                       <PencilSquareIcon

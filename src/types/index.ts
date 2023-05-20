@@ -7,3 +7,10 @@ export interface Task extends Models.Document {
   reminders?: Date[];
   isCompleted: boolean;
 }
+
+export type ModalContextType = {
+  changeModalVisibility: (modal: ModalType) => void;
+  getModalState: (modal: ModalType) => boolean;
+};
+
+export type ModalType = "create" | "edit" | "sort";

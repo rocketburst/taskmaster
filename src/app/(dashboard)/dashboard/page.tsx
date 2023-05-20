@@ -1,5 +1,4 @@
 import MobileMenu from "@/components/MobileMenu";
-import PrioritySelector from "@/components/PrioritySelector";
 import TaskComponent from "@/components/Task";
 import { getUserTasks } from "@/lib/services";
 import { getCurrentUser } from "@/lib/session";
@@ -14,8 +13,6 @@ export default async function DashboardPage() {
         <h2 className="text-2xl font-bold text-gray-900">All Tasks</h2>
         <MobileMenu />
       </div>
-
-      <PrioritySelector />
 
       <div className="px-2 pt-5">
         <div className="space-y-4">
