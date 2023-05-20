@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import NextAuthProvider from "@/providers/NextAuthProvider";
 import ModalProvider from "@/contexts/ModalContext";
+import TaskProvider from "@/contexts/TaskContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={clsx(inter.className, "bg-gray-50")}>
         <NextAuthProvider>
-          <ModalProvider>{children}</ModalProvider>
+          <TaskProvider>
+            <ModalProvider>{children}</ModalProvider>
+          </TaskProvider>
         </NextAuthProvider>
       </body>
     </html>

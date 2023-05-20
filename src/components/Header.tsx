@@ -1,10 +1,13 @@
 "use client";
 
+import { TaskContext } from "@/contexts/TaskContext";
+import { TaskContextType } from "@/types";
 import {
   ArrowLeftOnRectangleIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { signOut } from "next-auth/react";
+import { useContext, type ChangeEvent } from "react";
 import Image from "next/image";
 
 type HeaderProps = {
@@ -13,6 +16,15 @@ type HeaderProps = {
 };
 
 export default function Header({ name, image }: HeaderProps) {
+  const { searchInput, changeSearchInput } = useContext(
+    TaskContext
+  ) as TaskContextType;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    changeSearchInput(e.target.value);
+  };
+
   return (
     <header className="bg-gray-100">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
@@ -29,6 +41,8 @@ export default function Header({ name, image }: HeaderProps) {
                 id="search"
                 type="search"
                 placeholder="Search Tasks..."
+                value={searchInput}
+                onChange={handleChange}
               />
 
               <button

@@ -1,5 +1,5 @@
 import MobileMenu from "@/components/MobileMenu";
-import TaskComponent from "@/components/Task";
+import TaskList from "@/components/TaskList";
 import { getUserTasks } from "@/lib/services";
 import { getCurrentUser } from "@/lib/session";
 
@@ -15,15 +15,7 @@ export default async function DashboardPage() {
           <MobileMenu />
         </div>
 
-        <div className="px-2 pt-5">
-          <div className="space-y-4">
-            {tasks.map(task => (
-              <div key={task.$id}>
-                <TaskComponent task={task} />
-              </div>
-            ))}
-          </div>
-        </div>
+        <TaskList tasks={tasks} />
       </div>
     </main>
   );

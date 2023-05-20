@@ -14,3 +14,8 @@ export type ModalContextType = {
 };
 
 export type ModalType = "create" | "edit" | "sort";
+
+export type TaskContextType = {
+  searchInput: string;
+  changeSearchInput: (content: string) => void;
+};
