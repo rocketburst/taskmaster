@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+
 import { GoogleIcon } from "./Icons";
 
 type AuthBoxProps = {

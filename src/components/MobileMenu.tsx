@@ -8,7 +8,7 @@ import {
   ArrowsUpDownIcon,
 } from "@heroicons/react/20/solid";
 import { ModalContext } from "@/contexts/ModalContext";
-import { ModalContextType } from "@/types";
+import type { ModalContextType } from "@/types";
 
 export default function MobileMenu() {
   const { changeModalVisibility } = useContext(

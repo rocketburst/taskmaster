@@ -5,7 +5,7 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Listbox, Transition } from "@headlessui/react";
 
 import { TaskContext } from "@/contexts/TaskContext";
-import { type TaskContextType } from "@/types";
+import type { TaskContextType } from "@/types";
 
 export default function PrioritySelector() {
   const { selectedPriority, setSelectedPriority, priorityOptions } = useContext(

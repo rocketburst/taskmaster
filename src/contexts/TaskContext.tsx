@@ -1,7 +1,8 @@
 "use client";
 
-import { TaskContextType } from "@/types";
 import { createContext, useState } from "react";
+
+import type { TaskContextType } from "@/types";
 
 export const TaskContext = createContext<TaskContextType | null>(null);
 

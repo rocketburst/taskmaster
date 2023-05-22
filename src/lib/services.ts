@@ -1,6 +1,6 @@
 import { env } from "@/env.mjs";
 import { db } from "./appwrite";
-import { Task } from "@/types";
+import type { Task } from "@/types";
 
 export async function getAllTasks() {
   return await db

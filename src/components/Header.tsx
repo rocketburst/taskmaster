@@ -1,7 +1,5 @@
 "use client";
 
-import { TaskContext } from "@/contexts/TaskContext";
-import { TaskContextType } from "@/types";
 import {
   ArrowLeftOnRectangleIcon,
   MagnifyingGlassIcon,
@@ -9,6 +7,9 @@ import {
 import { signOut } from "next-auth/react";
 import { useContext, type ChangeEvent } from "react";
 import Image from "next/image";
+
+import { type TaskContextType } from "@/types";
+import { TaskContext } from "@/contexts/TaskContext";
 
 type HeaderProps = {
   name: string;

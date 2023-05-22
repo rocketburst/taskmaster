@@ -1,9 +1,10 @@
 "use client";
 
-import { ModalContext } from "@/contexts/ModalContext";
-import { Task, ModalContextType } from "@/types";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useContext, useState } from "react";
+
+import { ModalContext } from "@/contexts/ModalContext";
+import type { Task, ModalContextType } from "@/types";
 
 type TaskComponentProps = {
   task: Task;

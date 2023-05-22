@@ -1,8 +1,8 @@
+import { getUserTasks } from "@/lib/services";
+import { getCurrentUser } from "@/lib/session";
 import CreateModal from "@/components/CreateModal";
 import MobileMenu from "@/components/MobileMenu";
 import TaskList from "@/components/TaskList";
-import { getUserTasks } from "@/lib/services";
-import { getCurrentUser } from "@/lib/session";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();

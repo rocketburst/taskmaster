@@ -1,9 +1,10 @@
 "use client";
 
-import { Task, TaskContextType } from "@/types";
-import TaskComponent from "./Task";
-import { TaskContext } from "@/contexts/TaskContext";
 import { useContext } from "react";
+
+import { TaskContext } from "@/contexts/TaskContext";
+import type { Task, TaskContextType } from "@/types";
+import TaskComponent from "./Task";
 
 type TaskListProps = { tasks: Task[] };
 

@@ -5,7 +5,7 @@ import { Fragment, useContext, useState } from "react";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
-import { ModalContextType, TaskContextType } from "@/types";
+import type { ModalContextType, TaskContextType } from "@/types";
 import PrioritySelector from "./PrioritySelector";
 
 export default function CreateModal() {

@@ -1,5 +1,6 @@
 import { NextAuthOptions, DefaultSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+
 import { env } from "@/env.mjs";
 
 declare module "next-auth" {
