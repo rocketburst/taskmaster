@@ -18,4 +18,7 @@ export type ModalType = "create" | "edit" | "sort";
 export type TaskContextType = {
   searchInput: string;
   changeSearchInput: (content: string) => void;
+  priorityOptions: string[];
+  selectedPriority: string;
+  setSelectedPriority: React.Dispatch<React.SetStateAction<string>>;
 };

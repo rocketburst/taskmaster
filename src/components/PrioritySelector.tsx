@@ -1,13 +1,16 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useContext } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Listbox, Transition } from "@headlessui/react";
 
-const priorityOptions = ["Low", "Medium", "High"];
+import { TaskContext } from "@/contexts/TaskContext";
+import { type TaskContextType } from "@/types";
 
 export default function PrioritySelector() {
-  const [selectedPriority, setSelectedPriority] = useState(priorityOptions[0]);
+  const { selectedPriority, setSelectedPriority, priorityOptions } = useContext(
+    TaskContext
+  ) as TaskContextType;
 
   return (
     <div className="">
