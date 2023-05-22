@@ -1,20 +1,22 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext, useState } from "react";
+import { type FormEvent, Fragment, useContext, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
+import { createNewTask } from "@/lib/services";
 import type { ModalContextType, TaskContextType } from "@/types";
 import PrioritySelector from "./PrioritySelector";
 
 export default function CreateModal() {
+  const { data: session } = useSession();
+
   const { getModalState, changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
-  const { selectedPriority, setSelectedPriority, priorityOptions } = useContext(
-    TaskContext
-  ) as TaskContextType;
+  const { selectedPriority } = useContext(TaskContext) as TaskContextType;
 
   const [contentInput, setContentInput] = useState("");
   const [reminderInput, setReminderInput] = useState("");
@@ -26,6 +28,22 @@ export default function CreateModal() {
       setReminders([...reminders, new Date(reminderInput)]);
 
     setReminderInput("");
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    changeModalVisibility("create");
+
+    await createNewTask(
+      contentInput,
+      selectedPriority.toLowerCase(),
+      session?.user.email as string,
+      reminders
+    );
+
+    setContentInput("");
+    setReminderInput("");
+    setReminders([]);
   };
 
   return (
@@ -67,7 +85,7 @@ export default function CreateModal() {
                     Create a New Task!
                   </Dialog.Title>
 
-                  <form className="mt-4 space-y-6" action="#" method="POST">
+                  <form className="mt-4 space-y-6" onSubmit={handleSubmit}>
                     <div>
                       <label
                         htmlFor="email"
@@ -78,10 +96,12 @@ export default function CreateModal() {
 
                       <div className="mt-2">
                         <input
-                          id="email"
-                          name="email"
-                          type="email"
-                          autoComplete="email"
+                          id="content"
+                          name="content"
+                          autoComplete="content"
+                          type="text"
+                          value={contentInput}
+                          onChange={e => setContentInput(e.target.value)}
                           required
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                         />
@@ -125,7 +145,6 @@ export default function CreateModal() {
                           name="reminder"
                           type="datetime-local"
                           autoComplete="reminder"
-                          required
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                           value={reminderInput}
                           onChange={e => setReminderInput(e.target.value)}
