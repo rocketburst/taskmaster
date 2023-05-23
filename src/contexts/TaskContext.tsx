@@ -18,6 +18,7 @@ export default function TaskProvider({
   const [selectedPriority, setSelectedPriority] = useState(priorityOptions[0]);
 
   const [createdTasks, setCreatedTasks] = useState<Task[]>([]);
+  const [updatedTasks, setUpdatedTasks] = useState<Task[]>([]);
 
   return (
     <TaskContext.Provider
@@ -29,6 +30,8 @@ export default function TaskProvider({
         setSelectedPriority,
         createdTasks,
         setCreatedTasks,
+        updatedTasks,
+        setUpdatedTasks,
       }}
     >
       {children}

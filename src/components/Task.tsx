@@ -1,20 +1,25 @@
 "use client";
 
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useContext, useState } from "react";
+import { type ChangeEvent, useContext } from "react";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import type { Task, ModalContextType } from "@/types";
+import { updateTaskCompletion } from "@/lib/services";
 
 type TaskComponentProps = {
   task: Task;
 };
 
 export default function TaskComponent({ task }: TaskComponentProps) {
-  const [isDisabled, setIsDisabled] = useState(false);
   const { changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
+
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    await updateTaskCompletion(task);
+  };
 
   return (
     <div className="flex items-center justify-between">
@@ -23,16 +28,17 @@ export default function TaskComponent({ task }: TaskComponentProps) {
           id="checked-checkbox"
           type="checkbox"
           value=""
+          checked={task.isCompleted}
           className={`h-4 w-4 rounded border-gray-300 bg-gray-100 text-red-500 focus:ring-2 focus:ring-red-400 ${
-            isDisabled && "opacity-50"
+            task.isCompleted && "opacity-50"
           }`}
-          onClick={() => setIsDisabled(!isDisabled)}
+          onChange={handleChange}
         />
 
         <label
           htmlFor="terms1"
           className={`pt-[0.05rem] text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
-            isDisabled && "line-through"
+            task.isCompleted && "line-through"
           }`}
         >
           {task.content}

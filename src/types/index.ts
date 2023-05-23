@@ -1,4 +1,5 @@
-import { Models } from "appwrite";
+import type { Models } from "appwrite";
+import type { Dispatch, SetStateAction } from "react";
 
 export interface Task extends Models.Document {
   content: string;
@@ -20,7 +21,9 @@ export type TaskContextType = {
   changeSearchInput: (content: string) => void;
   priorityOptions: string[];
   selectedPriority: string;
-  setSelectedPriority: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedPriority: Dispatch<SetStateAction<string>>;
   createdTasks: Task[];
-  setCreatedTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  setCreatedTasks: Dispatch<SetStateAction<Task[]>>;
+  updatedTasks: Task[];
+  setUpdatedTasks: Dispatch<SetStateAction<Task[]>>;
 };

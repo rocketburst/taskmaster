@@ -1,22 +1,14 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  type FormEvent,
-  Fragment,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import { type FormEvent, Fragment, useContext, useState } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
 import { createNewTask } from "@/lib/services";
-import { CREATE_ACTION_STRING, client } from "@/lib/appwrite";
-import { env } from "@/env.mjs";
-import type { ModalContextType, Task, TaskContextType } from "@/types";
+import type { ModalContextType, TaskContextType } from "@/types";
 import PrioritySelector from "./PrioritySelector";
 
 export default function CreateModal() {
@@ -25,9 +17,7 @@ export default function CreateModal() {
   const { getModalState, changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
-  const { selectedPriority, createdTasks, setCreatedTasks } = useContext(
-    TaskContext
-  ) as TaskContextType;
+  const { selectedPriority } = useContext(TaskContext) as TaskContextType;
 
   const [contentInput, setContentInput] = useState("");
   const [reminderInput, setReminderInput] = useState("");
@@ -40,27 +30,6 @@ export default function CreateModal() {
 
     setReminderInput("");
   };
-
-  useEffect(() => {
-    const unsubscribe = client.subscribe(
-      `databases.${env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}.collections.${env.NEXT_PUBLIC_APPWRITE_TASKS_COLLECTION_ID}.documents`,
-      res => {
-        console.log(res);
-        console.log(res.payload);
-
-        if (res.events.includes(CREATE_ACTION_STRING)) {
-          setCreatedTasks([
-            ...(createdTasks as unknown as Task[]),
-            res.payload as Task,
-          ]);
-        }
-      }
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, [client]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

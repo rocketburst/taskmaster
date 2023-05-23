@@ -41,3 +41,9 @@ export async function createNewTask(
     }
   );
 }
+
+export async function updateTaskCompletion(task: Task) {
+  await db.updateDocument(task.$databaseId, task.$collectionId, task.$id, {
+    isCompleted: !task.isCompleted,
+  });
+}
