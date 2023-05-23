@@ -9,9 +9,14 @@ import TaskComponent from "./Task";
 type TaskListProps = { tasks: Task[] };
 
 export default function TaskList({ tasks }: TaskListProps) {
-  const { searchInput } = useContext(TaskContext) as TaskContextType;
+  const { searchInput, fetchedTasks } = useContext(
+    TaskContext
+  ) as TaskContextType;
 
-  const filteredTasks = tasks.filter(task =>
+  const allTasks =
+    fetchedTasks.length !== 0 ? [...fetchedTasks, ...tasks] : tasks;
+
+  const filteredTasks = allTasks.filter(task =>
     task.content.toLocaleLowerCase().includes(searchInput)
   );
 

@@ -1,13 +1,22 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { type FormEvent, Fragment, useContext, useState } from "react";
+import {
+  type FormEvent,
+  Fragment,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import { useSession } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
 import { createNewTask } from "@/lib/services";
-import type { ModalContextType, TaskContextType } from "@/types";
+import { client } from "@/lib/appwrite";
+import { env } from "@/env.mjs";
+import type { ModalContextType, Task, TaskContextType } from "@/types";
 import PrioritySelector from "./PrioritySelector";
 
 export default function CreateModal() {
@@ -16,7 +25,9 @@ export default function CreateModal() {
   const { getModalState, changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
-  const { selectedPriority } = useContext(TaskContext) as TaskContextType;
+  const { selectedPriority, fetchedTasks, setFetchedTasks } = useContext(
+    TaskContext
+  ) as TaskContextType;
 
   const [contentInput, setContentInput] = useState("");
   const [reminderInput, setReminderInput] = useState("");
@@ -30,16 +41,31 @@ export default function CreateModal() {
     setReminderInput("");
   };
 
+  useEffect(() => {
+    client.subscribe(
+      `databases.${env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}.collections.${env.NEXT_PUBLIC_APPWRITE_TASKS_COLLECTION_ID}.documents`,
+      ({ payload }) => {
+        console.log(payload);
+        setFetchedTasks([
+          ...(fetchedTasks as unknown as Task[]),
+          payload as Task,
+        ]);
+      }
+    );
+  }, [client]);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     changeModalVisibility("create");
+    const notification = toast.loading("Creating task...");
 
     await createNewTask(
       contentInput,
       selectedPriority.toLowerCase(),
       session?.user.email as string,
       reminders
-    );
+    ).then(() => toast.success("Task Created! ", { id: notification }));
 
     setContentInput("");
     setReminderInput("");

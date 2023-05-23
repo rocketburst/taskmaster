@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 
-import type { TaskContextType } from "@/types";
+import type { Task, TaskContextType } from "@/types";
 
 export const TaskContext = createContext<TaskContextType | null>(null);
 
@@ -17,6 +17,8 @@ export default function TaskProvider({
   const priorityOptions = ["Low", "Medium", "High"];
   const [selectedPriority, setSelectedPriority] = useState(priorityOptions[0]);
 
+  const [fetchedTasks, setFetchedTasks] = useState<Task[]>([]);
+
   return (
     <TaskContext.Provider
       value={{
@@ -25,6 +27,8 @@ export default function TaskProvider({
         priorityOptions,
         selectedPriority,
         setSelectedPriority,
+        fetchedTasks,
+        setFetchedTasks,
       }}
     >
       {children}
