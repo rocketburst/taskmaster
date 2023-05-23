@@ -7,3 +7,6 @@ export const client = new Client()
   .setEndpoint(env.NEXT_PUBLIC_APPWRITE_API_ENDPOINT);
 
 export const db = new Databases(client);
+
+export const CREATE_ACTION_STRING =
+  "databases.*.collections.*.documents.*.create";

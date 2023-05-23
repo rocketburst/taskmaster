@@ -14,7 +14,7 @@ import { toast } from "react-hot-toast";
 import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
 import { createNewTask } from "@/lib/services";
-import { client } from "@/lib/appwrite";
+import { CREATE_ACTION_STRING, client } from "@/lib/appwrite";
 import { env } from "@/env.mjs";
 import type { ModalContextType, Task, TaskContextType } from "@/types";
 import PrioritySelector from "./PrioritySelector";
@@ -25,7 +25,7 @@ export default function CreateModal() {
   const { getModalState, changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
-  const { selectedPriority, fetchedTasks, setFetchedTasks } = useContext(
+  const { selectedPriority, createdTasks, setCreatedTasks } = useContext(
     TaskContext
   ) as TaskContextType;
 
@@ -42,16 +42,24 @@ export default function CreateModal() {
   };
 
   useEffect(() => {
-    client.subscribe(
+    const unsubscribe = client.subscribe(
       `databases.${env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}.collections.${env.NEXT_PUBLIC_APPWRITE_TASKS_COLLECTION_ID}.documents`,
-      ({ payload }) => {
-        console.log(payload);
-        setFetchedTasks([
-          ...(fetchedTasks as unknown as Task[]),
-          payload as Task,
-        ]);
+      res => {
+        console.log(res);
+        console.log(res.payload);
+
+        if (res.events.includes(CREATE_ACTION_STRING)) {
+          setCreatedTasks([
+            ...(createdTasks as unknown as Task[]),
+            res.payload as Task,
+          ]);
+        }
       }
     );
+
+    return () => {
+      unsubscribe();
+    };
   }, [client]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

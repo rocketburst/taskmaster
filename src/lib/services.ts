@@ -15,7 +15,11 @@ export async function getAllTasks() {
 
 export async function getUserTasks(userEmail: string) {
   const allTasks = await getAllTasks();
-  return allTasks.filter(task => task.userEmail === userEmail);
+  const userTasks = allTasks.filter(task => task.userEmail === userEmail);
+  const completedTasks = userTasks.filter(task => task.isCompleted);
+  const incompleteTasks = userTasks.filter(task => task.isCompleted === false);
+
+  return [...incompleteTasks, ...completedTasks];
 }
 
 export async function createNewTask(

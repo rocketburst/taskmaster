@@ -21,6 +21,6 @@ export type TaskContextType = {
   priorityOptions: string[];
   selectedPriority: string;
   setSelectedPriority: React.Dispatch<React.SetStateAction<string>>;
-  fetchedTasks: Task[];
-  setFetchedTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  createdTasks: Task[];
+  setCreatedTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 };
