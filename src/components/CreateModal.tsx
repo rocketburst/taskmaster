@@ -55,7 +55,11 @@ export default function CreateModal() {
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => changeModalVisibility("create")}
+          onClose={() => {
+            setContentInput("");
+            setReminderInput("");
+            changeModalVisibility("create");
+          }}
         >
           <Transition.Child
             as={Fragment}

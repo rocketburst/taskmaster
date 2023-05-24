@@ -72,6 +72,8 @@ export default function EditModal() {
           as="div"
           className="relative z-10"
           onClose={() => {
+            setContentInput("");
+            setReminderInput("");
             changeModalVisibility("edit");
             setSelectedTaskToEdit(null);
           }}
