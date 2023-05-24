@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/session";
 import CreateModal from "@/components/CreateModal";
 import MobileMenu from "@/components/MobileMenu";
 import TaskList from "@/components/TaskList";
+import EditModal from "@/components/EditModal";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
@@ -18,6 +19,7 @@ export default async function DashboardPage() {
 
         <TaskList tasks={tasks} />
         <CreateModal />
+        <EditModal />
       </div>
     </main>
   );

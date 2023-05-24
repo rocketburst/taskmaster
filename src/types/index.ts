@@ -26,4 +26,6 @@ export type TaskContextType = {
   setCreatedTasks: Dispatch<SetStateAction<Task[]>>;
   updatedTasks: Task[];
   setUpdatedTasks: Dispatch<SetStateAction<Task[]>>;
+  selectedTaskToEdit: Task | null;
+  setSelectedTaskToEdit: Dispatch<SetStateAction<Task | null>>;
 };

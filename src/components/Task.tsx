@@ -4,8 +4,10 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { type ChangeEvent, useContext } from "react";
 
 import { ModalContext } from "@/contexts/ModalContext";
-import type { Task, ModalContextType } from "@/types";
+import type { Task, ModalContextType, TaskContextType } from "@/types";
 import { updateTaskCompletion } from "@/lib/services";
+import { TaskContext } from "@/contexts/TaskContext";
+import { capitalize } from "@/lib/utils";
 
 type TaskComponentProps = {
   task: Task;
@@ -15,6 +17,9 @@ export default function TaskComponent({ task }: TaskComponentProps) {
   const { changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
+  const { setSelectedTaskToEdit, setSelectedPriority } = useContext(
+    TaskContext
+  ) as TaskContextType;
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -48,7 +53,11 @@ export default function TaskComponent({ task }: TaskComponentProps) {
       <div className="-mt-1 flex space-x-4">
         <PencilSquareIcon
           className="h-5 w-5"
-          onClick={() => changeModalVisibility("edit")}
+          onClick={() => {
+            setSelectedTaskToEdit(task);
+            setSelectedPriority(capitalize(task.priority));
+            changeModalVisibility("edit");
+          }}
         />
         <TrashIcon className="h-5 w-5" />
       </div>

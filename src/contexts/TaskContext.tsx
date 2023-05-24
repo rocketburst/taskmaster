@@ -14,11 +14,15 @@ export default function TaskProvider({
   const [searchInput, setSearchInput] = useState("");
   const changeSearchInput = (content: string) => setSearchInput(content);
 
-  const priorityOptions = ["Low", "Medium", "High"];
-  const [selectedPriority, setSelectedPriority] = useState(priorityOptions[0]);
-
   const [createdTasks, setCreatedTasks] = useState<Task[]>([]);
   const [updatedTasks, setUpdatedTasks] = useState<Task[]>([]);
+
+  const [selectedTaskToEdit, setSelectedTaskToEdit] = useState<Task | null>(
+    null
+  );
+
+  const priorityOptions = ["Low", "Medium", "High"];
+  const [selectedPriority, setSelectedPriority] = useState(priorityOptions[0]);
 
   return (
     <TaskContext.Provider
@@ -32,6 +36,8 @@ export default function TaskProvider({
         setCreatedTasks,
         updatedTasks,
         setUpdatedTasks,
+        selectedTaskToEdit,
+        setSelectedTaskToEdit,
       }}
     >
       {children}
