@@ -47,3 +47,23 @@ export async function updateTaskCompletion(task: Task) {
     isCompleted: !task.isCompleted,
   });
 }
+
+export async function updateTask(
+  taskId: string,
+  content: string,
+  priority: string,
+  userEmail: string,
+  reminders?: Date[]
+) {
+  await db.updateDocument(
+    env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+    env.NEXT_PUBLIC_APPWRITE_TASKS_COLLECTION_ID,
+    taskId,
+    {
+      content,
+      priority,
+      reminders,
+      userEmail,
+    }
+  );
+}

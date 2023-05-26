@@ -13,7 +13,7 @@ import { toast } from "react-hot-toast";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
-import { createNewTask } from "@/lib/services";
+import { createNewTask, updateTask } from "@/lib/services";
 import type { ModalContextType, TaskContextType } from "@/types";
 import PrioritySelector from "./PrioritySelector";
 
@@ -53,12 +53,13 @@ export default function EditModal() {
     changeModalVisibility("edit");
     const notification = toast.loading("Updating task...");
 
-    // await createNewTask(
-    //   contentInput,
-    //   selectedPriority.toLowerCase(),
-    //   session?.user.email as string,
-    //   reminders
-    // ).then(() => toast.success("Task Updated! ", { id: notification }));
+    await updateTask(
+      selectedTaskToEdit?.$id as string,
+      contentInput,
+      selectedPriority.toLowerCase(),
+      session?.user.email as string,
+      reminders
+    ).then(() => toast.success("Task Updated! ", { id: notification }));
 
     setContentInput("");
     setReminderInput("");
