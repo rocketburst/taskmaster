@@ -13,7 +13,7 @@ import { toast } from "react-hot-toast";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
-import { createNewTask, updateTask } from "@/lib/services";
+import { updateTask } from "@/lib/services";
 import type { ModalContextType, TaskContextType } from "@/types";
 import PrioritySelector from "./PrioritySelector";
 

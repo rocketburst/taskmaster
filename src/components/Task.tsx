@@ -1,13 +1,14 @@
 "use client";
 
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { type ChangeEvent, useContext } from "react";
+import { type ChangeEvent, useContext, type MouseEvent } from "react";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import type { Task, ModalContextType, TaskContextType } from "@/types";
-import { updateTaskCompletion } from "@/lib/services";
+import { deleteTask, updateTaskCompletion } from "@/lib/services";
 import { TaskContext } from "@/contexts/TaskContext";
 import { capitalize } from "@/lib/utils";
+import { toast } from "react-hot-toast";
 
 type TaskComponentProps = {
   task: Task;
@@ -24,6 +25,17 @@ export default function TaskComponent({ task }: TaskComponentProps) {
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     await updateTaskCompletion(task);
+  };
+
+  const handleDelete = async (
+    e: MouseEvent<SVGSVGElement, globalThis.MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    const notification = toast.loading("Deleting task...");
+    await deleteTask(task).then(() =>
+      toast.success("Task Deleted! ", { id: notification })
+    );
   };
 
   return (
@@ -59,7 +71,7 @@ export default function TaskComponent({ task }: TaskComponentProps) {
             changeModalVisibility("edit");
           }}
         />
-        <TrashIcon className="h-5 w-5" />
+        <TrashIcon className="h-5 w-5" onClick={handleDelete} />
       </div>
     </div>
   );

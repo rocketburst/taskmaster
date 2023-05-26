@@ -6,7 +6,11 @@ import type { RealtimeResponseEvent } from "appwrite";
 import { TaskContext } from "@/contexts/TaskContext";
 import { client } from "@/lib/appwrite";
 import { env } from "@/env.mjs";
-import { CREATE_ACTION_STRING, UPDATE_ACTION_STRING } from "@/lib/constants";
+import {
+  CREATE_ACTION_STRING,
+  DELETE_ACTION_STRING,
+  UPDATE_ACTION_STRING,
+} from "@/lib/constants";
 import type { Task, TaskContextType } from "@/types";
 import TaskComponent from "./Task";
 
@@ -39,7 +43,14 @@ export default function TaskList({ tasks }: TaskListProps) {
           const element = allTasks.find(task => task.$id === res.payload.$id);
           const index = allTasks.indexOf(element as Task);
           allTasks.splice(index, 1, res.payload);
-          setUpdatedTasks([...(updatedTasks as Task[]), res.payload as Task]);
+          setUpdatedTasks([...(updatedTasks as Task[]), res.payload]);
+        }
+
+        if (res.events.includes(DELETE_ACTION_STRING)) {
+          const element = allTasks.find(task => task.$id === res.payload.$id);
+          const index = allTasks.indexOf(element as Task);
+          allTasks.splice(index, 1);
+          setUpdatedTasks([...(updatedTasks as Task[]), res.payload]);
         }
       }
     );

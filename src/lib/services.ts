@@ -67,3 +67,7 @@ export async function updateTask(
     }
   );
 }
+
+export async function deleteTask(task: Task) {
+  await db.deleteDocument(task.$databaseId, task.$collectionId, task.$id);
+}
