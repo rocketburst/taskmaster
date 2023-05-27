@@ -5,8 +5,14 @@ export interface Task extends Models.Document {
   content: string;
   priority: "low" | "medium" | "high";
   userEmail: string;
-  reminders?: Date[];
+  reminders?: string[];
   isCompleted: boolean;
+}
+
+export interface Reminder {
+  id: string;
+  content: string;
+  reminder: string;
 }
 
 export type ModalContextType = {

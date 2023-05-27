@@ -2,7 +2,7 @@ import { ID } from "appwrite";
 
 import { env } from "@/env.mjs";
 import { db } from "./appwrite";
-import type { Task } from "@/types";
+import type { Reminder, Task } from "@/types";
 
 export async function getAllTasks() {
   return await db
@@ -70,4 +70,40 @@ export async function updateTask(
 
 export async function deleteTask(task: Task) {
   await db.deleteDocument(task.$databaseId, task.$collectionId, task.$id);
+}
+
+export async function getUserReminders(userEmail: string) {
+  const tasks = await getUserTasks(userEmail);
+
+  const tasksWithReminders = tasks.filter(task => !!task.reminders);
+  const tasksWithOneReminder = tasksWithReminders.filter(
+    task => (task.reminders?.length as number) === 1
+  );
+  const tasksWithMoreThanOneReminder = tasksWithReminders.filter(
+    task => (task.reminders?.length as number) > 1
+  );
+
+  const reminders: Reminder[] = [];
+
+  tasksWithOneReminder
+    .map(task => ({
+      id: task.$id,
+      content: task.content,
+      reminder: (task.reminders as string[])[0],
+    }))
+    .forEach(reminder => reminders.push(reminder));
+
+  tasksWithMoreThanOneReminder
+    .map(task => {
+      return (task.reminders as string[]).map(reminder => ({
+        id: task.$id,
+        content: task.content,
+        reminder,
+      }));
+    })
+    .map(reminderArray => {
+      reminderArray.forEach(reminder => reminders.push(reminder));
+    });
+
+  return reminders;
 }
