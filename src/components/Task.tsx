@@ -64,14 +64,14 @@ export default function TaskComponent({ task }: TaskComponentProps) {
 
       <div className="-mt-1 flex space-x-4">
         <PencilSquareIcon
-          className="h-5 w-5"
+          className="h-5 w-5 cursor-pointer"
           onClick={() => {
             setSelectedTaskToEdit(task);
             setSelectedPriority(capitalize(task.priority));
             changeModalVisibility("edit");
           }}
         />
-        <TrashIcon className="h-5 w-5" onClick={handleDelete} />
+        <TrashIcon className="h-5 w-5 cursor-pointer" onClick={handleDelete} />
       </div>
     </div>
   );
