@@ -107,7 +107,7 @@ export default function EditModal() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Create a New Task!
+                    Update Existing Task!
                   </Dialog.Title>
 
                   <form className="mt-4 space-y-6" onSubmit={handleSubmit}>
