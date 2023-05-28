@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 
-import type { Task, TaskContextType } from "@/types";
+import type { SortingMethod, Task, TaskContextType } from "@/types";
 
 export const TaskContext = createContext<TaskContextType | null>(null);
 
@@ -16,6 +16,7 @@ export default function TaskProvider({
 
   const [createdTasks, setCreatedTasks] = useState<Task[]>([]);
   const [updatedTasks, setUpdatedTasks] = useState<Task[]>([]);
+  const [sortedTasks, setSortedTasks] = useState<Task[]>([]);
 
   const [selectedTaskToEdit, setSelectedTaskToEdit] = useState<Task | null>(
     null
@@ -23,6 +24,19 @@ export default function TaskProvider({
 
   const priorityOptions = ["Low", "Medium", "High"];
   const [selectedPriority, setSelectedPriority] = useState(priorityOptions[0]);
+
+  const sortMethods = [
+    "None",
+    "Alphabetical (A - Z)",
+    "Alphabetical (Z - A)",
+    "Highest Priority",
+  ] satisfies SortingMethod[];
+  const [selectedSortMethod, setSelectedSortMethod] = useState<SortingMethod>(
+    sortMethods[0]
+  );
+
+  const [needToSort, setNeedToSort] = useState(false);
+  const changeNeedToSort = () => setNeedToSort(!needToSort);
 
   return (
     <TaskContext.Provider
@@ -38,6 +52,13 @@ export default function TaskProvider({
         setUpdatedTasks,
         selectedTaskToEdit,
         setSelectedTaskToEdit,
+        sortMethods,
+        selectedSortMethod,
+        setSelectedSortMethod,
+        needToSort,
+        changeNeedToSort,
+        sortedTasks,
+        setSortedTasks,
       }}
     >
       {children}

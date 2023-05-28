@@ -23,6 +23,11 @@ export default function TaskList({ tasks }: TaskListProps) {
     setCreatedTasks,
     updatedTasks,
     setUpdatedTasks,
+    needToSort,
+    selectedSortMethod,
+    changeNeedToSort,
+    sortedTasks,
+    setSortedTasks,
   } = useContext(TaskContext) as TaskContextType;
 
   const allTasks = tasks;
@@ -55,6 +60,49 @@ export default function TaskList({ tasks }: TaskListProps) {
       }
     );
   }, [client, allTasks]);
+
+  useEffect(() => {
+    if (needToSort) {
+      if (selectedSortMethod === "None") {
+        changeNeedToSort();
+        return;
+      }
+
+      if (selectedSortMethod === "Alphabetical (A - Z)") {
+        allTasks.sort((a, b) => a.content.localeCompare(b.content));
+        setSortedTasks(allTasks);
+        changeNeedToSort();
+        return;
+      }
+
+      if (selectedSortMethod === "Alphabetical (Z - A)") {
+        allTasks.sort((a, b) => b.content.localeCompare(a.content));
+        setSortedTasks(allTasks);
+        changeNeedToSort();
+        return;
+      }
+
+      if (selectedSortMethod === "Highest Priority") {
+        const highPriorityTasks = allTasks.filter(
+          task => task.priority === "high"
+        );
+        const mediumPriorityTasks = allTasks.filter(
+          task => task.priority === "medium"
+        );
+        const lowPriorityTasks = allTasks.filter(
+          task => task.priority === "low"
+        );
+
+        setSortedTasks([
+          ...highPriorityTasks,
+          ...mediumPriorityTasks,
+          ...lowPriorityTasks,
+        ]);
+        changeNeedToSort();
+        return;
+      }
+    }
+  }, [needToSort]);
 
   const filteredTasks = allTasks
     .filter(task => task.content.toLocaleLowerCase().includes(searchInput))

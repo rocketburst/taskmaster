@@ -15,6 +15,12 @@ export interface Reminder {
   reminder: string;
 }
 
+export type SortingMethod =
+  | "None"
+  | "Alphabetical (A - Z)"
+  | "Alphabetical (Z - A)"
+  | "Highest Priority";
+
 export type ModalContextType = {
   changeModalVisibility: (modal: ModalType) => void;
   getModalState: (modal: ModalType) => boolean;
@@ -34,4 +40,11 @@ export type TaskContextType = {
   setUpdatedTasks: Dispatch<SetStateAction<Task[]>>;
   selectedTaskToEdit: Task | null;
   setSelectedTaskToEdit: Dispatch<SetStateAction<Task | null>>;
+  sortMethods: string[];
+  selectedSortMethod: SortingMethod;
+  setSelectedSortMethod: Dispatch<SetStateAction<SortingMethod>>;
+  needToSort: boolean;
+  changeNeedToSort: () => void;
+  sortedTasks: Task[];
+  setSortedTasks: Dispatch<SetStateAction<Task[]>>;
 };
