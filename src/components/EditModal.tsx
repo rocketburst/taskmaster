@@ -1,6 +1,7 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   type FormEvent,
   Fragment,
@@ -30,6 +31,9 @@ export default function EditModal() {
   const [reminderInput, setReminderInput] = useState("");
 
   const [reminders, setReminders] = useState<Date[]>([]);
+  const removeReminder = (id: number) => {
+    setReminders(reminders.filter((element, idx) => idx !== id));
+  };
 
   useEffect(() => {
     if (selectedTaskToEdit && selectedTaskToEdit.reminders) {
@@ -180,9 +184,19 @@ export default function EditModal() {
                       <div className="pl-5 pt-2">
                         <ul>
                           {reminders.map((reminder, idx) => (
-                            <li key={idx} className="text-xs">
-                              - {reminder.toLocaleDateString()} ·{" "}
-                              {reminder.toLocaleTimeString()}
+                            <li
+                              key={idx}
+                              className="flex items-center justify-between text-xs"
+                            >
+                              <span>
+                                - {reminder.toLocaleDateString()} ·{" "}
+                                {reminder.toLocaleTimeString()}
+                              </span>
+
+                              <XMarkIcon
+                                className="h-5 w-5 cursor-pointer"
+                                onClick={() => removeReminder(idx)}
+                              />
                             </li>
                           ))}
                         </ul>
