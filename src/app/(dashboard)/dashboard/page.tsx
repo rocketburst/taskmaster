@@ -1,12 +1,12 @@
 import { getUserReminders, getUserTasks } from "@/lib/services";
 import { getCurrentUser } from "@/lib/session";
-import CreateModal from "@/components/CreateModal";
-import MobileMenu from "@/components/MobileMenu";
-import TaskList from "@/components/TaskList";
-import EditModal from "@/components/EditModal";
-import ActionsList from "@/components/ActionsList";
-import Calendar from "@/components/Calendar";
-import SortModal from "@/components/SortModal";
+import CreateModal from "@/components/modals/CreateModal";
+import MobileMenu from "@/components/ui/MobileMenu";
+import TaskList from "@/components/lists/TaskList";
+import EditModal from "@/components/modals/EditModal";
+import ActionsList from "@/components/lists/ActionsList";
+import Calendar from "@/components/ui/Calendar";
+import SortModal from "@/components/modals/SortModal";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();

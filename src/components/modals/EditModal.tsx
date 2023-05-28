@@ -16,7 +16,7 @@ import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
 import { updateTask } from "@/lib/services";
 import type { ModalContextType, TaskContextType } from "@/types";
-import PrioritySelector from "./PrioritySelector";
+import PrioritySelector from "../selectors/PrioritySelector";
 
 export default function EditModal() {
   const { data: session } = useSession();

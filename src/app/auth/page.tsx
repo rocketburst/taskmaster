@@ -1,7 +1,7 @@
 import { getProviders } from "next-auth/react";
 import Image from "next/image";
 
-import AuthBox from "@/components/AuthBox";
+import AuthBox from "@/components/ui/AuthBox";
 
 export default async function LoginPage() {
   const providers = await getProviders();

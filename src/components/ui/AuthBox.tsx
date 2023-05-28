@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 
-import { GoogleIcon } from "./Icons";
+import GoogleIcon from "./icons/GoogleIcon";
 
 type AuthBoxProps = {
   name: string;

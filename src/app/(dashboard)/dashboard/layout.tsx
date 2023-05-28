@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { getCurrentUser } from "@/lib/session";
-import Header from "@/components/Header";
+import Header from "@/components/ui/Header";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;

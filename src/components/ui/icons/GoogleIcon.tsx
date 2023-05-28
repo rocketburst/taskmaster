@@ -1,6 +1,6 @@
 "use client";
 
-export function GoogleIcon() {
+export default function GoogleIcon() {
   return (
     <svg
       width={19}

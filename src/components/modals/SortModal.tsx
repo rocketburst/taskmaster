@@ -6,7 +6,7 @@ import { type FormEvent, Fragment, useContext } from "react";
 import { ModalContext } from "@/contexts/ModalContext";
 import { TaskContext } from "@/contexts/TaskContext";
 import type { ModalContextType, TaskContextType } from "@/types";
-import SortSelector from "./SortSelector";
+import SortSelector from "../selectors/SortSelector";
 
 export default function SortModal() {
   const { getModalState, changeModalVisibility } = useContext(
