@@ -2,6 +2,7 @@
 
 import { createContext, useState } from "react";
 
+import { AIInputSchema } from "@/lib/validators";
 import type { SortingMethod, Task, TaskContextType } from "@/types";
 
 export const TaskContext = createContext<TaskContextType | null>(null);
@@ -39,7 +40,9 @@ export default function TaskProvider({
   const changeNeedToSort = () => setNeedToSort(!needToSort);
 
   const getTaskSummary = async () => {
-    console.log("functin");
+    const { inputString } = await fetch("/api/ai-input")
+      .then(res => res.json())
+      .then(json => AIInputSchema.parse(json));
   };
 
   return (
