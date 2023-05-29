@@ -1,6 +1,7 @@
 "use client";
 
 import { PlusCircleIcon, ArrowsUpDownIcon } from "@heroicons/react/20/solid";
+import { CloudIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 
 import { ModalContext } from "@/contexts/ModalContext";
@@ -27,6 +28,11 @@ export default function ActionsList() {
       >
         <ArrowsUpDownIcon className="h-5 w-5" />
         <span>Sort Task</span>
+      </li>
+
+      <li className="flex cursor-pointer items-center space-x-3 pl-2">
+        <CloudIcon className="h-5 w-5" />
+        <span>Get Today's Summary</span>
       </li>
     </ul>
   );

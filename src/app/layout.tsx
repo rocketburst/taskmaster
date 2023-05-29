@@ -1,11 +1,8 @@
 import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import clsx from "clsx";
 import "./globals.css";
 
-import NextAuthProvider from "@/providers/NextAuthProvider";
-import ModalProvider from "@/contexts/ModalContext";
-import TaskProvider from "@/contexts/TaskContext";
+import Providers from "@/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(inter.className, "bg-gray-50")}>
-        <NextAuthProvider>
-          <TaskProvider>
-            <ModalProvider>
-              <Toaster />
-              {children}
-            </ModalProvider>
-          </TaskProvider>
-        </NextAuthProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
