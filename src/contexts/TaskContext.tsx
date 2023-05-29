@@ -38,6 +38,10 @@ export default function TaskProvider({
   const [needToSort, setNeedToSort] = useState(false);
   const changeNeedToSort = () => setNeedToSort(!needToSort);
 
+  const getTaskSummary = async () => {
+    console.log("functin");
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -59,6 +63,7 @@ export default function TaskProvider({
         changeNeedToSort,
         sortedTasks,
         setSortedTasks,
+        getTaskSummary,
       }}
     >
       {children}

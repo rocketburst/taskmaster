@@ -14,6 +14,7 @@ export const env = createEnv({
     ),
     GOOGLE_CLIENT_ID: z.string().min(1),
     GOOGLE_CLIENT_SECRET: z.string().min(1),
+    MASTER_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APPWRITE_PROJECT_ID: z.string().min(1),
@@ -35,5 +36,6 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_APPWRITE_TASKS_COLLECTION_ID,
     NEXT_PUBLIC_APPWRITE_API_ENDPOINT:
       process.env.NEXT_PUBLIC_APPWRITE_API_ENDPOINT,
+    MASTER_KEY: process.env.MASTER_KEY,
   },
 });
