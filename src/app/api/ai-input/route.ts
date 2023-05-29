@@ -1,8 +1,9 @@
+import { NextResponse } from "next/server";
+
 import { env } from "@/env.mjs";
 import { adminDb } from "@/lib/admin";
 import { getCurrentUser } from "@/lib/session";
 import { Task } from "@/types";
-import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const userEmail = (await getCurrentUser())?.email as string;
@@ -21,7 +22,7 @@ export async function GET(req: Request) {
   userTasks.forEach(
     task =>
       (taskString += `
-  - ${task.content}`)
+  - ${task.content} (${task.priority} priority)`)
   );
 
   const inputString = promptString + taskString;

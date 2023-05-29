@@ -1,6 +1,8 @@
 import type { Models } from "appwrite";
 import type { Dispatch, SetStateAction } from "react";
 
+import { OpenAIResponse } from "@/lib/validators";
+
 export interface Task extends Models.Document {
   content: string;
   priority: "low" | "medium" | "high";
@@ -47,5 +49,5 @@ export type TaskContextType = {
   changeNeedToSort: () => void;
   sortedTasks: Task[];
   setSortedTasks: Dispatch<SetStateAction<Task[]>>;
-  getTaskSummary: () => Promise<void>;
+  getTaskSummary: () => Promise<OpenAIResponse>;
 };

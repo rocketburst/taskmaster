@@ -21,6 +21,7 @@ export const env = createEnv({
     NEXT_PUBLIC_APPWRITE_DATABASE_ID: z.string().min(1),
     NEXT_PUBLIC_APPWRITE_TASKS_COLLECTION_ID: z.string().min(1),
     NEXT_PUBLIC_APPWRITE_API_ENDPOINT: z.string().min(1).url(),
+    NEXT_PUBLIC_OPENAI_API_KEY: z.string().min(1),
   },
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
@@ -37,5 +38,6 @@ export const env = createEnv({
     NEXT_PUBLIC_APPWRITE_API_ENDPOINT:
       process.env.NEXT_PUBLIC_APPWRITE_API_ENDPOINT,
     MASTER_KEY: process.env.MASTER_KEY,
+    NEXT_PUBLIC_OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   },
 });
