@@ -16,13 +16,13 @@ export async function GET(req: Request) {
     .then(list => list.documents as Task[])
     .then(allTasks => allTasks.filter(task => task.userEmail === userEmail));
 
-  const promptString = `I have a couple tasks I need to do. They are listed below. Can you summarize them into a neat and concise sentence? Can you make sure the tasks are mentioned by order of priority (highest to lowest) without mentioning the tasks' priorities in your response?`;
+  const promptString = `I have a couple tasks I need to do. They are listed below along with what priority they have. Can you summarize them into a neat and concise sentence? Can you make sure the tasks are mentioned by order of priority (highest to lowest) without mentioning the tasks' priorities in your response?`;
 
   let taskString = "";
   userTasks.forEach(
     task =>
       (taskString += `
-  - ${task.content} (${task.priority} priority)`)
+  - ${task.content}, which has ${task.priority} priority`)
   );
 
   const inputString = promptString + taskString;
