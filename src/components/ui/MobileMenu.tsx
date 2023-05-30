@@ -17,14 +17,14 @@ export default function MobileMenu() {
     ModalContext
   ) as ModalContextType;
 
-  const { getTaskSummary } = useContext(TaskContext) as TaskContextType;
+  const { createTaskSummary } = useContext(TaskContext) as TaskContextType;
 
   const handleSummarize = async (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
 
-    await getTaskSummary();
+    await createTaskSummary();
   };
 
   return (

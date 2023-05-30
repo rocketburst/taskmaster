@@ -39,7 +39,7 @@ export default function TaskProvider({
   const [needToSort, setNeedToSort] = useState(false);
   const changeNeedToSort = () => setNeedToSort(!needToSort);
 
-  const getTaskSummary = async () => {
+  const createTaskSummary = async () => {
     const { inputString } = await fetch("/api/ai-input")
       .then(res => res.json())
       .then(json => AIInputSchema.parse(json));
@@ -50,6 +50,8 @@ export default function TaskProvider({
     });
     const { summaryObject }: { summaryObject: OpenAIResponse } =
       await res.json();
+
+    localStorage.setItem("summary", summaryObject.choices[0].text);
 
     return summaryObject;
   };
@@ -75,7 +77,7 @@ export default function TaskProvider({
         changeNeedToSort,
         sortedTasks,
         setSortedTasks,
-        getTaskSummary,
+        createTaskSummary,
       }}
     >
       {children}

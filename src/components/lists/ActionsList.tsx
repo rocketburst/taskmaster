@@ -12,14 +12,14 @@ export default function ActionsList() {
   const { changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
-  const { getTaskSummary } = useContext(TaskContext) as TaskContextType;
+  const { createTaskSummary } = useContext(TaskContext) as TaskContextType;
 
   const handleSummarize = async (
     e: MouseEvent<HTMLLIElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
 
-    await getTaskSummary();
+    await createTaskSummary();
   };
 
   return (

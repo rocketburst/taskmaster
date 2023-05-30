@@ -49,5 +49,5 @@ export type TaskContextType = {
   changeNeedToSort: () => void;
   sortedTasks: Task[];
   setSortedTasks: Dispatch<SetStateAction<Task[]>>;
-  getTaskSummary: () => Promise<OpenAIResponse>;
+  createTaskSummary: () => Promise<OpenAIResponse>;
 };

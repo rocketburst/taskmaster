@@ -26,6 +26,8 @@ export default function Header({ name, image }: HeaderProps) {
     changeSearchInput(e.target.value);
   };
 
+  const summary = localStorage.getItem("summary");
+
   return (
     <header className="bg-gray-100">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
@@ -88,7 +90,9 @@ export default function Header({ name, image }: HeaderProps) {
           </h1>
 
           <p className="mt-1.5 text-sm text-gray-500">
-            Check out what tasks you have down below!
+            {summary
+              ? `Today's Summary: ${summary}`
+              : "Check out what tasks you have down below!"}
           </p>
         </div>
       </div>
