@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, type MouseEvent, useContext } from "react";
+import { Fragment, useContext } from "react";
 import {
   ChevronDownIcon,
   PlusCircleIcon,
@@ -9,23 +9,17 @@ import {
   CloudIcon,
 } from "@heroicons/react/20/solid";
 import { ModalContext } from "@/contexts/ModalContext";
-import { TaskContext } from "@/contexts/TaskContext";
-import type { ModalContextType, TaskContextType } from "@/types";
+import { SummaryContext } from "@/contexts/SummaryContext";
+import type { ModalContextType, SummaryContextType } from "@/types";
 
 export default function MobileMenu() {
   const { changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
 
-  const { createTaskSummary } = useContext(TaskContext) as TaskContextType;
-
-  const handleSummarize = async (
-    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) => {
-    e.preventDefault();
-
-    await createTaskSummary();
-  };
+  const { handleSummarizeAction } = useContext(
+    SummaryContext
+  ) as SummaryContextType;
 
   return (
     <div className="z-10 sm:hidden">
@@ -106,7 +100,7 @@ export default function MobileMenu() {
                     className={`${
                       active ? "bg-red-500 text-white" : "text-gray-900"
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                    onClick={handleSummarize}
+                    onClick={handleSummarizeAction}
                   >
                     {active ? (
                       <CloudIcon

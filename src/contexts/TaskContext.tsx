@@ -2,7 +2,6 @@
 
 import { createContext, useState } from "react";
 
-import { AIInputSchema, OpenAIResponse } from "@/lib/validators";
 import type { SortingMethod, Task, TaskContextType } from "@/types";
 
 export const TaskContext = createContext<TaskContextType | null>(null);
@@ -39,23 +38,6 @@ export default function TaskProvider({
   const [needToSort, setNeedToSort] = useState(false);
   const changeNeedToSort = () => setNeedToSort(!needToSort);
 
-  const createTaskSummary = async () => {
-    const { inputString } = await fetch("/api/ai-input")
-      .then(res => res.json())
-      .then(json => AIInputSchema.parse(json));
-
-    const res = await fetch("/api/summarize", {
-      method: "POST",
-      body: JSON.stringify({ inputString }),
-    });
-    const { summaryObject }: { summaryObject: OpenAIResponse } =
-      await res.json();
-
-    localStorage.setItem("summary", summaryObject.choices[0].text);
-
-    return summaryObject;
-  };
-
   return (
     <TaskContext.Provider
       value={{
@@ -77,7 +59,6 @@ export default function TaskProvider({
         changeNeedToSort,
         sortedTasks,
         setSortedTasks,
-        createTaskSummary,
       }}
     >
       {children}

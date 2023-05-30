@@ -1,5 +1,5 @@
 import type { Models } from "appwrite";
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, MouseEvent, SetStateAction } from "react";
 
 import { OpenAIResponse } from "@/lib/validators";
 
@@ -49,5 +49,11 @@ export type TaskContextType = {
   changeNeedToSort: () => void;
   sortedTasks: Task[];
   setSortedTasks: Dispatch<SetStateAction<Task[]>>;
+};
+
+export type SummaryContextType = {
   createTaskSummary: () => Promise<OpenAIResponse>;
+  handleSummarizeAction: (
+    e: MouseEvent<HTMLElement, globalThis.MouseEvent>
+  ) => Promise<void>;
 };
