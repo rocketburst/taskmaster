@@ -5,7 +5,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { signOut } from "next-auth/react";
-import { useContext, type ChangeEvent } from "react";
+import { useContext, type ChangeEvent, useState, useEffect } from "react";
 import Image from "next/image";
 
 import { type TaskContextType } from "@/types";
@@ -20,13 +20,17 @@ export default function Header({ name, image }: HeaderProps) {
   const { searchInput, changeSearchInput } = useContext(
     TaskContext
   ) as TaskContextType;
+  const [summary, setSummary] = useState<string | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     changeSearchInput(e.target.value);
   };
 
-  const summary = localStorage.getItem("summary");
+  useEffect(() => {
+    if (localStorage.getItem("summary"))
+      setSummary(localStorage.getItem("summary"));
+  }, []);
 
   return (
     <header className="bg-gray-100">

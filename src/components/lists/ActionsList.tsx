@@ -1,7 +1,10 @@
 "use client";
 
 import { PlusCircleIcon, ArrowsUpDownIcon } from "@heroicons/react/20/solid";
-import { CloudIcon } from "@heroicons/react/24/outline";
+import {
+  CloudIcon,
+  PlusCircleIcon as PlusCircleOutlineIcon,
+} from "@heroicons/react/24/outline";
 import { useContext } from "react";
 
 import { ModalContext } from "@/contexts/ModalContext";
@@ -24,6 +27,14 @@ export default function ActionsList() {
       >
         <PlusCircleIcon className="h-5 w-5" />
         <span>Create Task</span>
+      </li>
+
+      <li
+        className="flex cursor-pointer items-center space-x-3 pl-2"
+        onClick={() => changeModalVisibility("upload")}
+      >
+        <PlusCircleOutlineIcon className="h-5 w-5" />
+        <span>Batch Upload Task</span>
       </li>
 
       <li

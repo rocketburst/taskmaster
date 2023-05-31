@@ -1,0 +1,15 @@
+High Priority Tasks
+- do the dishes
+...
+
+Medium Priority Tasks
+- wash the car
+...
+
+Low Priority Tasks
+- go to friend's house
+...
+
+if no tasks for certain priortiy:
+Medium Priority Tasks
+NONE

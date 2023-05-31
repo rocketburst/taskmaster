@@ -14,6 +14,7 @@ export default function ModalProvider({
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isSortModalOpen, setIsSortModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   const changeModalVisibility = (modal: ModalType) => {
     switch (modal) {
@@ -26,6 +27,8 @@ export default function ModalProvider({
       case "sort":
         setIsSortModalOpen(!isSortModalOpen);
         break;
+      case "upload":
+        setIsUploadModalOpen(!isUploadModalOpen);
     }
   };
 
@@ -37,6 +40,8 @@ export default function ModalProvider({
         return isEditModalOpen;
       case "sort":
         return isSortModalOpen;
+      case "upload":
+        return isUploadModalOpen;
     }
   };
 

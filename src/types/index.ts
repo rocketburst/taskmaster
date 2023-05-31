@@ -28,7 +28,7 @@ export type ModalContextType = {
   getModalState: (modal: ModalType) => boolean;
 };
 
-export type ModalType = "create" | "edit" | "sort";
+export type ModalType = "create" | "edit" | "sort" | "upload";
 
 export type TaskContextType = {
   searchInput: string;

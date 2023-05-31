@@ -7,6 +7,7 @@ import EditModal from "@/components/modals/EditModal";
 import ActionsList from "@/components/lists/ActionsList";
 import Calendar from "@/components/ui/Calendar";
 import SortModal from "@/components/modals/SortModal";
+import UploadModal from "@/components/modals/UploadModal";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
@@ -51,6 +52,7 @@ export default async function DashboardPage() {
       <CreateModal />
       <EditModal />
       <SortModal />
+      <UploadModal />
     </main>
   );
 }

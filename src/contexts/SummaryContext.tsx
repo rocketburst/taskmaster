@@ -27,6 +27,7 @@ export default function SummaryProvider({
     return summaryObject;
   };
 
+  // TODO: add toaster for ui when loading
   const handleSummarizeAction = async (
     e: MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) => {
