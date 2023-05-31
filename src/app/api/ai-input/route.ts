@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { env } from "@/env.mjs";
 import { adminDb } from "@/lib/admin";
 import { getCurrentUser } from "@/lib/session";
-import { Task } from "@/types";
+import { PROMPT_STRING } from "@/lib/constants";
+import type { Task } from "@/types";
 
 export async function GET(req: Request) {
   const userEmail = (await getCurrentUser())?.email as string;
@@ -16,8 +17,6 @@ export async function GET(req: Request) {
     .then(list => list.documents as Task[])
     .then(allTasks => allTasks.filter(task => task.userEmail === userEmail));
 
-  const promptString = `I have a couple tasks I need to do. They are listed below along with what priority they have. Can you summarize them into a neat and concise sentence? Can you make sure the tasks are mentioned by order of priority (highest to lowest) without mentioning the tasks' priorities in your response?`;
-
   let taskString = "";
   userTasks.forEach(
     task =>
@@ -25,6 +24,6 @@ export async function GET(req: Request) {
   - ${task.content}, which has ${task.priority} priority`)
   );
 
-  const inputString = promptString + taskString;
+  const inputString = PROMPT_STRING + taskString;
   return NextResponse.json({ inputString });
 }
