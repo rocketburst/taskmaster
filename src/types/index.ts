@@ -57,3 +57,22 @@ export type SummaryContextType = {
     e: MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) => Promise<void>;
 };
+
+export type StorageBucketResponse = {
+  message?: string;
+  error?: string;
+  bucket?: {
+    $id: string;
+    $createdAt: string;
+    $updatedAt: string;
+    $permissions: string[];
+    fileSecurity: boolean;
+    name: string;
+    enabled: boolean;
+    maximumFileSize: number;
+    allowedFileExtensions: string[];
+    compression: string;
+    encryption: boolean;
+    antivirus: boolean;
+  };
+};

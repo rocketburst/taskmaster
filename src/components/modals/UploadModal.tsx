@@ -2,21 +2,24 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { FormEvent, Fragment, useContext, useState } from "react";
+import { useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 
 import { ModalContext } from "@/contexts/ModalContext";
-import type { ModalContextType } from "@/types";
+import type { ModalContextType, StorageBucketResponse } from "@/types";
 
 export default function UploadModal() {
   const { getModalState, changeModalVisibility } = useContext(
     ModalContext
   ) as ModalContextType;
   const [file, setFile] = useState<File | null>(null);
+  const [bucketId, setBucketId] = useState("");
+  const { data: session } = useSession();
 
-  console.log(file);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!file || file.type !== "text/plain") {
       toast.error("Invalid File!");
       setFile(null);
@@ -25,6 +28,25 @@ export default function UploadModal() {
     }
 
     changeModalVisibility("upload");
+
+    const { error, message } = await fetch(
+      `/api/storage/bucket?userEmail=${session?.user?.email}`
+    ).then(res => res.json() as StorageBucketResponse);
+    console.log(error);
+    console.log(message);
+
+    if (message) setBucketId(message);
+
+    if (error) {
+      await fetch("/api/storage/bucket", {
+        method: "POST",
+        body: JSON.stringify({
+          userEmail: session?.user?.email as string,
+        }),
+      })
+        .then(res => res.json() as StorageBucketResponse)
+        .then(data => setBucketId(data.bucket?.$id as string));
+    }
   };
 
   return (
