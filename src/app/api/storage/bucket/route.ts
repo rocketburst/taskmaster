@@ -6,7 +6,12 @@ import { adminStorage } from "@/lib/admin";
 export async function POST(req: Request) {
   const { userEmail }: { userEmail: string } = await req.json();
 
-  const bucket = await adminStorage.createBucket(ID.unique(), userEmail);
+  const bucket = await adminStorage.createBucket(
+    ID.unique(),
+    userEmail,
+    [],
+    true
+  );
   return NextResponse.json({ bucket });
 }
 

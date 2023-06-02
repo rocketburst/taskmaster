@@ -14,6 +14,7 @@ export default function UploadModal() {
     ModalContext
   ) as ModalContextType;
   const [file, setFile] = useState<File | null>(null);
+  const [fileContents, setFileContents] = useState("");
   const [bucketId, setBucketId] = useState("");
   const { data: session } = useSession();
 
@@ -32,8 +33,6 @@ export default function UploadModal() {
     const { error, message } = await fetch(
       `/api/storage/bucket?userEmail=${session?.user?.email}`
     ).then(res => res.json() as StorageBucketResponse);
-    console.log(error);
-    console.log(message);
 
     if (message) setBucketId(message);
 
@@ -47,6 +46,15 @@ export default function UploadModal() {
         .then(res => res.json() as StorageBucketResponse)
         .then(data => setBucketId(data.bucket?.$id as string));
     }
+
+    const fileReader = new FileReader();
+    fileReader.onload = e => setFileContents(e.target?.result as string);
+    fileReader.readAsText(file);
+
+    await fetch("/api/storage/file", {
+      method: "POST",
+      body: JSON.stringify({ bucketId, fileContents }),
+    });
   };
 
   return (
