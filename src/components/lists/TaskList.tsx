@@ -110,7 +110,7 @@ export default function TaskList({ tasks }: TaskListProps) {
 
   return (
     <div className="px-2 pt-5">
-      <div className="max-h-96 space-y-4 overflow-y-scroll py-2 pl-2 scrollbar-hide">
+      <div className="max-h-40 space-y-4 overflow-y-scroll py-2 pl-2 scrollbar-hide lg:max-h-96">
         {filteredTasks.map(task => (
           <div key={task.$id}>
             <TaskComponent task={task} />
