@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 
 import { ModalContext } from "@/contexts/ModalContext";
+import { extractTasks, getTaskSections, isTaskStringValid } from "@/lib/utils";
 import type { ModalContextType, StorageBucketResponse } from "@/types";
 
 export default function UploadModal() {
@@ -14,9 +15,26 @@ export default function UploadModal() {
     ModalContext
   ) as ModalContextType;
   const [file, setFile] = useState<File | null>(null);
-  const [fileContents, setFileContents] = useState("");
-  const [bucketId, setBucketId] = useState("");
+  const [isError, setIsError] = useState(false);
   const { data: session } = useSession();
+
+  const getBucketId = async () => {
+    const { message } = await fetch(
+      `/api/storage/bucket?userEmail=${session?.user?.email}`
+    ).then(res => res.json() as StorageBucketResponse);
+
+    if (message) return message;
+    else {
+      const { bucket } = await fetch("/api/storage/bucket", {
+        method: "POST",
+        body: JSON.stringify({
+          userEmail: session?.user?.email as string,
+        }),
+      }).then(res => res.json() as StorageBucketResponse);
+
+      return bucket?.$id as string;
+    }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,31 +47,48 @@ export default function UploadModal() {
     }
 
     changeModalVisibility("upload");
-
-    const { error, message } = await fetch(
-      `/api/storage/bucket?userEmail=${session?.user?.email}`
-    ).then(res => res.json() as StorageBucketResponse);
-
-    if (message) setBucketId(message);
-
-    if (error) {
-      await fetch("/api/storage/bucket", {
-        method: "POST",
-        body: JSON.stringify({
-          userEmail: session?.user?.email as string,
-        }),
-      })
-        .then(res => res.json() as StorageBucketResponse)
-        .then(data => setBucketId(data.bucket?.$id as string));
-    }
+    const bucketId = await getBucketId();
 
     const fileReader = new FileReader();
-    fileReader.onload = e => setFileContents(e.target?.result as string);
     fileReader.readAsText(file);
 
-    await fetch("/api/storage/file", {
+    fileReader.onload = async e => {
+      const fileContents = e.target?.result as string;
+
+      await fetch("/api/storage/file", {
+        method: "POST",
+        body: JSON.stringify({
+          bucketId,
+          fileContents,
+        }),
+      })
+        .then(res => res.json())
+        .then(() => uploadTasks(fileContents));
+    };
+  };
+
+  const uploadTasks = async (content: string) => {
+    const { highPriority, mediumPriority, lowPriority } =
+      getTaskSections(content);
+    const taskStrings = [highPriority, mediumPriority, lowPriority];
+
+    taskStrings.forEach(str => {
+      if (!isTaskStringValid(str)) setIsError(true);
+    });
+
+    if (isError) {
+      // toast
+      console.log("io");
+      return;
+    }
+
+    const highTasks = extractTasks(highPriority);
+    const mediumTasks = extractTasks(mediumPriority);
+    const lowTasks = extractTasks(lowPriority);
+
+    await fetch(`/api/upload?userEmail=${session?.user?.email}`, {
       method: "POST",
-      body: JSON.stringify({ bucketId, fileContents }),
+      body: JSON.stringify({ highTasks, mediumTasks, lowTasks }),
     });
   };
 
