@@ -38,9 +38,10 @@ export default function UploadModal() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const id = toast.loading("Uploading Tasks...");
 
     if (!file || file.type !== "text/plain") {
-      toast.error("Invalid File!");
+      toast.error("Invalid File!", { id });
       setFile(null);
       changeModalVisibility("upload");
       return;
@@ -63,11 +64,12 @@ export default function UploadModal() {
         }),
       })
         .then(res => res.json())
-        .then(() => uploadTasks(fileContents));
+        .then(() => uploadTasks(fileContents, id))
+        .catch(() => toast.error("Something Went wrong!", { id }));
     };
   };
 
-  const uploadTasks = async (content: string) => {
+  const uploadTasks = async (content: string, id: string) => {
     const { highPriority, mediumPriority, lowPriority } =
       getTaskSections(content);
     const taskStrings = [highPriority, mediumPriority, lowPriority];
@@ -77,7 +79,7 @@ export default function UploadModal() {
     });
 
     if (isError) {
-      // toast
+      toast.error("Invalid File Format!", { id });
       console.log("io");
       return;
     }
@@ -89,7 +91,9 @@ export default function UploadModal() {
     await fetch(`/api/upload?userEmail=${session?.user?.email}`, {
       method: "POST",
       body: JSON.stringify({ highTasks, mediumTasks, lowTasks }),
-    });
+    })
+      .then(res => res.json())
+      .then(() => toast.success("Uploaded Tasks Successfully!", { id }));
   };
 
   return (
