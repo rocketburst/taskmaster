@@ -16,14 +16,14 @@ export default function Providers({ children }: Props) {
   return (
     <SessionProvider>
       <TaskProvider>
-        <SummaryProvider>
-          <ModalProvider>
+        <ModalProvider>
+          <SummaryProvider>
             <Toaster />
             <Modals />
 
             {children}
-          </ModalProvider>
-        </SummaryProvider>
+          </SummaryProvider>
+        </ModalProvider>
       </TaskProvider>
     </SessionProvider>
   );

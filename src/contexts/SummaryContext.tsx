@@ -1,7 +1,9 @@
-import { type MouseEvent, createContext } from "react";
+import { type MouseEvent, createContext, useContext } from "react";
+import { toast } from "react-hot-toast";
 
-import { AIInputSchema, OpenAIResponse } from "@/lib/validators";
-import type { SummaryContextType } from "@/types";
+import { AIInputSchema, type OpenAIResponse } from "@/lib/validators";
+import { ModalContext } from "./ModalContext";
+import type { ModalContextType, SummaryContextType } from "@/types";
 
 export const SummaryContext = createContext<SummaryContextType | null>(null);
 
@@ -10,6 +12,10 @@ export default function SummaryProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const { changeModalVisibility } = useContext(
+    ModalContext
+  ) as ModalContextType;
+
   const createTaskSummary = async () => {
     const { inputString } = await fetch("/api/ai-input")
       .then(res => res.json())
@@ -27,13 +33,17 @@ export default function SummaryProvider({
     return summaryObject;
   };
 
-  // TODO: add toaster for ui when loading
   const handleSummarizeAction = async (
     e: MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
 
-    await createTaskSummary();
+    const id = toast.loading("Getting Summary");
+
+    await createTaskSummary().then(() => {
+      toast.success("Summarization Successful!", { id });
+      changeModalVisibility("summary");
+    });
   };
 
   return (

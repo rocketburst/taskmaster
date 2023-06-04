@@ -3,6 +3,7 @@
 import CreateModal from "./CreateModal";
 import EditModal from "./EditModal";
 import SortModal from "./SortModal";
+import SummaryModal from "./SummaryModal";
 import UploadModal from "./UploadModal";
 
 export default function Modals() {
@@ -12,6 +13,7 @@ export default function Modals() {
       <EditModal />
       <SortModal />
       <UploadModal />
+      <SummaryModal />
     </>
   );
 }
