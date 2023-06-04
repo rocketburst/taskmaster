@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import ModalProvider from "@/contexts/ModalContext";
 import TaskProvider from "@/contexts/TaskContext";
 import SummaryProvider from "@/contexts/SummaryContext";
+import Modals from "@/components/modals";
 
 type Props = {
   children: React.ReactNode;
@@ -18,6 +19,8 @@ export default function Providers({ children }: Props) {
         <SummaryProvider>
           <ModalProvider>
             <Toaster />
+            <Modals />
+
             {children}
           </ModalProvider>
         </SummaryProvider>

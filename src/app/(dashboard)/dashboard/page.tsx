@@ -1,13 +1,9 @@
 import { getUserReminders, getUserTasks } from "@/lib/services";
 import { getCurrentUser } from "@/lib/session";
-import CreateModal from "@/components/modals/CreateModal";
 import MobileMenu from "@/components/ui/MobileMenu";
-import TaskList from "@/components/lists/TaskList";
-import EditModal from "@/components/modals/EditModal";
-import ActionsList from "@/components/lists/ActionsList";
 import Calendar from "@/components/ui/Calendar";
-import SortModal from "@/components/modals/SortModal";
-import UploadModal from "@/components/modals/UploadModal";
+import TaskList from "@/components/lists/TaskList";
+import ActionsList from "@/components/lists/ActionsList";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
@@ -48,11 +44,6 @@ export default async function DashboardPage() {
           <Calendar reminders={reminders} />
         </div>
       </div>
-
-      <CreateModal />
-      <EditModal />
-      <SortModal />
-      <UploadModal />
     </main>
   );
 }
