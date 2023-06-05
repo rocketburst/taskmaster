@@ -1,3 +1,4 @@
+import "server-only";
 import { NextAuthOptions, DefaultSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 

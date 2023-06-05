@@ -1,3 +1,4 @@
+import "server-only";
 import {
   Client as AdminClient,
   Databases as AdminDatabases,

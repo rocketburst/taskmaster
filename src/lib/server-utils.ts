@@ -1,3 +1,4 @@
+import "server-only";
 import { ID } from "node-appwrite";
 
 import { env } from "@/env.mjs";
