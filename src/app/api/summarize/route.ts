@@ -1,9 +1,34 @@
-import { env } from "@/env.mjs";
-import { AIInputSchema, OpenAIResponse } from "@/lib/validators";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
-export async function POST(req: Request) {
+import { env } from "@/env.mjs";
+import { AIInputSchema, type OpenAIResponse } from "@/lib/validators";
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  analytics: true,
+  // TODO: uncomment when done
+  // limiter: Ratelimit.slidingWindow(5, "86400s"),
+  limiter: Ratelimit.slidingWindow(5, "100s"),
+});
+
+export async function POST(req: NextRequest) {
   const { inputString } = AIInputSchema.parse(await req.json());
+  const ip = req.headers.get("x-forwarded-for") ?? "";
+
+  const { success, remaining, reset } = await ratelimit.limit(ip);
+
+  if (!success) {
+    const now = Date.now();
+    const retryAfter = Math.floor((reset - now) / 1000);
+    return new NextResponse("Too Many Requests", {
+      status: 429,
+      headers: {
+        ["retry-after"]: `${retryAfter}`,
+      },
+    });
+  }
 
   // TODO: uncomment when in final and add rate limitng
   // const summaryObject = (await fetch("https://api.openai.com/v1/completions", {
@@ -39,5 +64,7 @@ export async function POST(req: Request) {
     },
   } as OpenAIResponse;
 
-  return NextResponse.json({ summaryObject });
+  console.log(remaining);
+
+  return NextResponse.json({ summaryObject, remainingUses: remaining });
 }

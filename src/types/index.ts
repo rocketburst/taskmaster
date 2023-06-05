@@ -52,7 +52,7 @@ export type TaskContextType = {
 };
 
 export type SummaryContextType = {
-  createTaskSummary: () => Promise<OpenAIResponse>;
+  createTaskSummary: () => Promise<void>;
   handleSummarizeAction: (
     e: MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) => Promise<void>;
@@ -76,3 +76,8 @@ export type StorageBucketResponse = {
     antivirus: boolean;
   };
 };
+
+export type SummarizationResponse = Partial<{
+  summaryObject: OpenAIResponse;
+  remainingUses: number;
+}>;

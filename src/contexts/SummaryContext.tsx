@@ -1,9 +1,13 @@
 import { type MouseEvent, createContext, useContext } from "react";
 import { toast } from "react-hot-toast";
 
-import { AIInputSchema, type OpenAIResponse } from "@/lib/validators";
+import { AIInputSchema } from "@/lib/validators";
 import { ModalContext } from "./ModalContext";
-import type { ModalContextType, SummaryContextType } from "@/types";
+import type {
+  ModalContextType,
+  SummarizationResponse,
+  SummaryContextType,
+} from "@/types";
 
 export const SummaryContext = createContext<SummaryContextType | null>(null);
 
@@ -21,16 +25,16 @@ export default function SummaryProvider({
       .then(res => res.json())
       .then(json => AIInputSchema.parse(json));
 
-    const res = await fetch("/api/summarize", {
+    const { summaryObject } = await fetch("/api/summarize", {
       method: "POST",
       body: JSON.stringify({ inputString }),
-    });
-    const { summaryObject }: { summaryObject: OpenAIResponse } =
-      await res.json();
+    })
+      .then(res => res.json())
+      .then(data => data as SummarizationResponse);
 
-    localStorage.setItem("summary", summaryObject.choices[0].text);
-
-    return summaryObject;
+    if (summaryObject) {
+      localStorage.setItem("summary", summaryObject.choices[0].text);
+    }
   };
 
   const handleSummarizeAction = async (
@@ -40,10 +44,12 @@ export default function SummaryProvider({
 
     const id = toast.loading("Getting Summary");
 
-    await createTaskSummary().then(() => {
-      toast.success("Summarization Successful!", { id });
-      changeModalVisibility("summary");
-    });
+    await createTaskSummary()
+      .then(() => {
+        toast.success("Summarization Successful!", { id });
+        changeModalVisibility("summary");
+      })
+      .catch(error => toast.error(`Rate Limit Reached`, { id }));
   };
 
   return (

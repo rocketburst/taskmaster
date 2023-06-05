@@ -1,21 +1,29 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { ModalContext } from "@/contexts/ModalContext";
 import type { ModalContextType } from "@/types";
 import BaseModal from "./BaseModal";
 
 export default function SummaryModal() {
-  const { changeModalVisibility } = useContext(
+  const { changeModalVisibility, getModalState } = useContext(
     ModalContext
   ) as ModalContextType;
+  const [summary, setSummary] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("summary"))
+      setSummary(localStorage.getItem("summary"));
+  }, [getModalState("summary")]);
 
   return (
     <BaseModal type="summary" title="Today's Summary">
-      <div className="mt-2">
-        <p className="text-sm text-gray-500">
-          {localStorage.getItem("summary")}
+      <div className="mt-2 space-y-3">
+        <p className="text-sm text-gray-500">{summary}</p>
+
+        <p className="text-xs text-gray-500">
+          *This route is rate limited to prevent spam
         </p>
       </div>
 

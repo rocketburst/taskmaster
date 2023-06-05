@@ -12,8 +12,8 @@ export default function Modals() {
       <CreateModal />
       <EditModal />
       <SortModal />
-      <UploadModal />
       <SummaryModal />
+      <UploadModal />
     </>
   );
 }
