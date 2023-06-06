@@ -50,7 +50,7 @@ export default function ActionsList() {
         onClick={handleSummarizeAction}
       >
         <CloudIcon className="h-5 w-5" />
-        <span>Get Today's Summary</span>
+        <span>Get Today&apos;s Summary</span>
       </li>
     </ul>
   );

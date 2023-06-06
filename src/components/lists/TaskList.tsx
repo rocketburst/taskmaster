@@ -59,7 +59,7 @@ export default function TaskList({ tasks }: TaskListProps) {
         }
       }
     );
-  }, [client, allTasks]);
+  }, [allTasks, createdTasks, setCreatedTasks, updatedTasks, setUpdatedTasks]);
 
   useEffect(() => {
     if (needToSort) {
@@ -102,7 +102,13 @@ export default function TaskList({ tasks }: TaskListProps) {
         return;
       }
     }
-  }, [needToSort]);
+  }, [
+    needToSort,
+    allTasks,
+    changeNeedToSort,
+    selectedSortMethod,
+    setSortedTasks,
+  ]);
 
   const filteredTasks = allTasks
     .filter(task => task.content.toLocaleLowerCase().includes(searchInput))

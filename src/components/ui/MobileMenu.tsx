@@ -113,7 +113,7 @@ export default function MobileMenu() {
                         aria-hidden="true"
                       />
                     )}
-                    Today's Summary
+                    Today&apos;s Summary
                   </button>
                 )}
               </Menu.Item>
