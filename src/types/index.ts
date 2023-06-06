@@ -1,7 +1,12 @@
 import type { Models } from "appwrite";
 import type { Dispatch, MouseEvent, SetStateAction } from "react";
+import React from "react";
 
 import { OpenAIResponse } from "@/lib/validators";
+
+export type LayoutProps = {
+  children: React.ReactNode;
+};
 
 export interface Task extends Models.Document {
   content: string;
