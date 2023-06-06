@@ -1,11 +1,11 @@
-import { getProviders } from "next-auth/react";
+"use client";
+
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 
-import AuthBox from "@/components/ui/AuthBox";
+import GoogleIcon from "@/components/ui/icons/GoogleIcon";
 
-export default async function LoginPage() {
-  const providers = await getProviders();
-
+export default function LoginPage() {
   return (
     <main className="flex h-screen flex-col justify-center overflow-y-scroll bg-gray-100 pb-12 sm:px-6">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -25,13 +25,15 @@ export default async function LoginPage() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="rounded-lg bg-white px-4 py-8 shadow-sm sm:px-10">
-          {Object.values(providers as any).map((provider: any) => (
-            <AuthBox
-              key={provider.id}
-              name={provider.name as string}
-              id={provider.id as string}
-            />
-          ))}
+          <div
+            className="flex cursor-pointer items-center space-x-3 rounded-md border border-red-500 p-3"
+            onClick={() => signIn("google")}
+          >
+            <GoogleIcon />
+            <span className="font-semibold text-red-500">
+              Sign In With Google
+            </span>
+          </div>
         </div>
       </div>
     </main>
